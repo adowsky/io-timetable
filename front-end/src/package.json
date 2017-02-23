@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "browser-sync": "^2.18.8",
     "es6-rest-client": "^3.0.4",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
@@ -27,7 +28,6 @@
     "gulp-if": "^2.0.1",
     "gulp-image": "^2.4.1",
     "gulp-react": "^3.1.0",
-    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
@@ -40,6 +40,11 @@
     "rest": "^2.0.0",
     "uglify": "^0.1.5",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "babel-register": "^6.23.0",
+    "http-proxy-middleware": "^0.17.3"
+  },
+  "devDependencies": {
+    "gulp-clean-css": "^3.0.3"
   }
 }

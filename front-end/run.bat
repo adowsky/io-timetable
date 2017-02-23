@@ -1,0 +1,1 @@
+mvn frontend:install-node-and-npm frontend:npm frontend:gulp

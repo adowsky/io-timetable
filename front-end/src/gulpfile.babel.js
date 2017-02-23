@@ -7,18 +7,20 @@ import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import htmlmin from "gulp-htmlmin";
 import image from "gulp-image";
-import sass from "gulp-sass";
 import uglify from "gulp-uglify";
 import gulpif from "gulp-if";
+import browsersync from "browser-sync";
+import proxyMiddleware from "http-proxy-middleware";
+import cleanCSS from "gulp-clean-css";
 
 const basePath = "target/_build/";
-const SOURCE_PATH = "src/";
+const SOURCE_PATH = "";
 
 const PATHS = {
     entryPoint: `${SOURCE_PATH}js/start.jsx`,
     jsOut: `${basePath}js/all.js`,
-    cssInput: `${SOURCE_PATH}css/style.css`,
-    cssOutput: `${basePath}/css/style.css`,
+    cssInput: `${SOURCE_PATH}css/*.css`,
+    cssOutput: `${basePath}css`,
     htmlInput: `${SOURCE_PATH}*.html`,
     imagesInput: `${SOURCE_PATH}/images/`,
     imagesOutput: `${basePath}/images/`,
@@ -40,6 +42,9 @@ gulp.task('prod', () => {
     process.env.NODE_ENV = 'production';
 });
 
+
+let syncInstance = null;
+
 gulp.task('build:js', () => {
     return browserify(options.browserify)
         .transform(babelify)
@@ -53,12 +58,11 @@ gulp.task('build:js', () => {
         .pipe(gulp.dest('.'));
 });
 
-gulp.task('build:css', () => {
-    return gulp.src(PATHS.cssInput)
-        .pipe(sass((isProduction()) ? {style: 'compressed'} : {})
-            .on('error', sass.logError))
-        .pipe(gulp.dest(PATHS.cssOutput));
-});
+gulp.task("build:css", () =>
+    gulp.src(PATHS.cssInput)
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(gulp.dest(PATHS.cssOutput))
+);
 
 gulp.task('build:html', () =>
     gulp.src(PATHS.htmlInput)
@@ -72,13 +76,28 @@ gulp.task('build:images', () => {
         .pipe(gulp.dest(PATHS.imagesOutput));
 });
 
-gulp.task('watch', () => {
-    gulp.watch('front-end/src/js/**/*.jsx', ['build:js']);
-    gulp.watch('front-end/js/css/**/*.scss', ['build:css']);
+gulp.task("watch", function() {
+    syncInstance = browsersync.create();
+    const proxy = proxyMiddleware("/api", { target: "http://localhost:1234/"});
+    syncInstance.init({
+        server: {
+            port: 3000,
+            host: 'localhost',
+            baseDir: "target/_build",
+            online: true,
+            middleware: [proxy]
+        }
+    });
+    new Promise(() => {
+        gulp.watch(["js/*.jsx"], ["build:js"]).on("change", syncInstance.reload);
+        gulp.watch([ "css/*.css"], ["build:css"]);
+        gulp.watch([ "**/*.html"], ["build:html"]);
+    });
+
 });
 
 gulp.task('build', ['build:css', 'build:html', 'build:js', 'build:images']);
 
 gulp.task('build:prod', ['prod', 'build:css', 'build:html', 'build:js', 'build:images']);
 
-gulp.task('default', ['build:css', 'build:html', 'build:js', 'build:images', 'watch']);
+gulp.task('default', ['build:html', 'build:css',  'build:js', 'watch']);
