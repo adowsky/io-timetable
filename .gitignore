@@ -1,0 +1,15 @@
+# User-specific stuff:
+.idea
+*.iml
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# IntelliJ
+/out/
+
+### Maven template
+**/target/
+
+##Node
+**/node_modules/
