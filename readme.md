@@ -1,19 +1,19 @@
-#Timetable substitution
+# Timetable substitution
 Projekt zaliczeniowy z przedmiotu IO2
 
-##Konfiguracja
+## Konfiguracja
 
-###Wymagania
+### Wymagania
 * Zainstalowany maven 
 * Java 8
 
-###Uruchomienie
+### Uruchomienie
 
-####timetable-substitution-impl
+#### timetable-substitution-impl
 Żeby uruchomić aplikację Spring Bootową należy przejść do katalogu timetable-substitution-impl i wykonać następujące polecenie 
 `mvn spring-boot:run`, bądź uruchomić w inny sposób (np. korzystając z IDE) cykl życia aplikacji spring-boot:run.
 
-####front-end
+#### front-end
 Ta część projektu korzysta z Node.js, które może zostać pobrane do projektu przy pomocy mavena. Aby to zrobić należy wykonać następujące polecenie
 `mvn frontend:install-node-and-npm`.
 
@@ -32,16 +32,16 @@ TL:DR
 
 `mvn frontend:gulp`
 
-##Specyfikacja
-####timetable-substitution-impl
+## Specyfikacja
+#### timetable-substitution-impl
 Wykorzystuje framework Spring. Wystawia punkty końcowe do poboru danych. 
 Projekt napisany tak by wspierał paradygmat REST.
 
-####front-end
+#### front-end
 Wykorzystuje framework React.js. Napisany przy użyciu ECMAScript 6.
 Aplikacja javascriptowa komunikująca się z back-endem.
 
-#Autorzy
+# Autorzy
 * Adrian Kosiński
 * Anna Maziejuk
 * Kamil Jankowski
