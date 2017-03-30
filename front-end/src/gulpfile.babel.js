@@ -43,7 +43,7 @@ gulp.task('prod', () => {
 });
 
 
-let syncInstance = null;
+let syncInstance = browsersync.create();
 
 gulp.task('build:js', () => {
     return browserify(options.browserify)
@@ -58,11 +58,13 @@ gulp.task('build:js', () => {
         .pipe(gulp.dest('.'));
 });
 
-gulp.task("build:css", () =>
+gulp.task("build:css", () => {
     gulp.src(PATHS.cssInput)
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest(PATHS.cssOutput))
-);
+        .pipe(syncInstance.stream())
+
+});
 
 gulp.task('build:html', () =>
     gulp.src(PATHS.htmlInput)
@@ -77,7 +79,6 @@ gulp.task('build:images', () => {
 });
 
 gulp.task("watch", function() {
-    syncInstance = browsersync.create();
     const proxy = proxyMiddleware("/api", { target: "http://localhost:1234/"});
     syncInstance.init({
         server: {
@@ -89,12 +90,15 @@ gulp.task("watch", function() {
         }
     });
     new Promise(() => {
-        gulp.watch(["js/*.jsx"], ["build:js"]).on("change", syncInstance.reload);
+        gulp.watch(["js/**/*.jsx"], ["js-watch"]);
         gulp.watch([ "css/*.css"], ["build:css"]);
-        gulp.watch([ "**/*.html"], ["build:html"]);
+        gulp.watch([ "**/*.html"], ["html-watch"]);
     });
 
 });
+
+gulp.task("js-watch", ["build:js"], () => syncInstance.reload());
+gulp.task("html-watch", ["build:html"], () => syncInstance.reload);
 
 gulp.task('build', ['build:css', 'build:html', 'build:js', 'build:images']);
 
