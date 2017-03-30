@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>timetable-substitution-impl</module>
-		<module>front-end</module>
+		<!--<module>front-end</module>-->
 	</modules>
 	<packaging>pom</packaging>
 
