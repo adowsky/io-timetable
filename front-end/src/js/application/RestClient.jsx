@@ -5,19 +5,19 @@ export default class RestClient {
             method: "GET"
         }).then(response => {
             if (response.status >= 200 && response.status < 300) {
-                return response
+
+                return response;
             } else {
                 let error = new Error(response.statusText);
                 error.response = response;
                 throw error;
             }
         })
-            .then(response => response.json())
+            .then(response =>  response.json())
             .then(response => {
-                console.debug(response);
+                console.debug(`RESPONSE: ${JSON.stringify(response)}`);
                 return response;
             })
-            .catch(error => console.warn("request failed", error));
     }
 
     postRequest(url = "", body = {}) {

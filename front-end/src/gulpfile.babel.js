@@ -1,6 +1,7 @@
 'use strict';
 
 import gulp from "gulp";
+import concat from "gulp-concat";
 import babelify from "babelify";
 import browserify from "browserify";
 import source from "vinyl-source-stream";
@@ -12,6 +13,9 @@ import gulpif from "gulp-if";
 import browsersync from "browser-sync";
 import proxyMiddleware from "http-proxy-middleware";
 import cleanCSS from "gulp-clean-css";
+import restify from "restify";
+import inquirer from "inquirer";
+import clear from "cli-clear";
 
 const basePath = "target/_build/";
 const SOURCE_PATH = "";
@@ -19,7 +23,11 @@ const SOURCE_PATH = "";
 const PATHS = {
     entryPoint: `${SOURCE_PATH}js/start.jsx`,
     jsOut: `${basePath}js/all.js`,
-    cssInput: `${SOURCE_PATH}css/*.css`,
+    cssInput: [
+        `${SOURCE_PATH}css/reset.css`,
+        `${SOURCE_PATH}css/fonts.css`,
+        `${SOURCE_PATH}css/base.css`
+    ],
     cssOutput: `${basePath}css`,
     htmlInput: `${SOURCE_PATH}*.html`,
     imagesInput: `${SOURCE_PATH}/images/`,
@@ -61,6 +69,7 @@ gulp.task('build:js', () => {
 gulp.task("build:css", () => {
     gulp.src(PATHS.cssInput)
         .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(concat('all.css'))
         .pipe(gulp.dest(PATHS.cssOutput))
         .pipe(syncInstance.stream())
 
@@ -79,7 +88,7 @@ gulp.task('build:images', () => {
 });
 
 gulp.task("watch", function() {
-    const proxy = proxyMiddleware("/api", { target: "http://localhost:1234/"});
+    const proxy = proxyMiddleware("/api", { target: "http://localhost:8080/"});
     syncInstance.init({
         server: {
             port: 3000,
@@ -95,6 +104,81 @@ gulp.task("watch", function() {
         gulp.watch([ "**/*.html"], ["html-watch"]);
     });
 
+});
+
+gulp.task("server", () => {
+    const server = restify.createServer({
+        name: "timetable-front",
+        version: "1.0.0"
+    });
+
+    server.use(restify.acceptParser(server.acceptable));
+    server.use(restify.queryParser());
+    server.use(restify.bodyParser());
+    server.use(restify.CORS());
+
+    const values = {
+        "GET/api/my-message" : [200, 400, 401, 500]
+    };
+
+    let currentValue = {
+        "GET/api/my-message" : 0,
+
+    };
+
+    server.get(/\/api\/my-message/, (req, res, next) => {
+        const key = "GET/api/my-message";
+        const code = values[key][currentValue[key]];
+        if (code === 200) {
+            res.send({
+                message: "My message"
+            });
+        } else {
+            res.send(code);
+        }
+        return next();
+    });
+
+
+    server.listen(8080, () => {
+        console.log("Server mock running on port: 8080");
+    });
+
+
+
+    const toggle = (key) => {
+        if (currentValue[key] + 1 === values[key].length) {
+            currentValue[key] = 0;
+        } else {
+            currentValue[key] += 1;
+        }
+    };
+
+    const menu = () => {
+        clear();
+        Object.keys(values).forEach((val) => {
+            console.info(`${val}: [${values[val][currentValue[val]]}]`);
+        });
+        let choices = Object.keys(values).concat(new inquirer.Separator(), "exit");
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "api",
+                message: "Change API",
+                choices: choices
+            }
+        ]).then((answers) => {
+            if(answers.api === "exit") {
+                process.exit();
+            } else {
+                toggle(answers.api);
+                menu();
+            }
+
+        });
+    };
+
+    menu();
 });
 
 gulp.task("js-watch", ["build:js"], () => syncInstance.reload());

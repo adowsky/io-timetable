@@ -1,3 +1,129 @@
-body{
-    background: white;
+body {
+    background-color: #fafafa;
+    margin: 0;
+}
+
+h1, h2, h3, h4, input, label {
+    font-family: Lato, sans-serif;
+}
+
+header {
+    max-height: 100px;
+    background: #005675;
+    color: #EFEFEF;
+    padding: 5px
+}
+
+header > h2, header > p {
+    margin: 0;
+}
+
+header > h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+header > p {
+    font-size: 12px;
+    font-family: Lato, sans-serif;
+}
+
+.root {
+    text-align: center;
+    margin-top: 10px;
+}
+
+nav > ul {
+    font-family: Lato, sans-serif;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
+
+nav li {
+    margin: 5px;
+}
+
+nav li > a {
+    display: block;
+    max-width: 50%;
+    padding: 10px;
+    color: #666;
+    margin: 0 auto;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+nav li > a:hover {
+    background-color: #eeeeee;
+}
+
+form {
+    min-height: 100px;
+}
+
+form > input {
+    display: block;
+    margin: 10px auto;
+}
+
+input[type=submit] {
+    transition: 300ms ease-out all;
+    padding: 5px 15px;
+    background: #005675;
+    border: 1px solid #003951;
+    border-radius: 4px;
+    color: #EFEFEF;
+    font-size: 14px;
+}
+
+input[type=submit]:hover {
+    background: #007da6;
+}
+
+.file-chooser {
+    color: #666666;
+}
+
+.file-chooser > input[type=file] {
+    display: none;
+}
+
+.file-chooser > span {
+    padding: 7px 5px;
+    min-width: 220px;
+    border: 1px solid #ccc;
+    border-right: none;
+    display: inline-block;
+    text-align: left;
+}
+
+.file-chooser > label {
+    transition: 300ms ease-out all;
+    padding: 6px 15px;
+    background: #005675;
+    border: 1px solid #003951;
+    border-radius: 4px;
+    color: #EFEFEF;
+    font-size: 14px;
+}
+
+.file-chooser > label:hover {
+    background: #007da6;
+}
+
+.input-placeholder {
+    transition: 300ms ease-out all;
+    font-size: 14px;
+    display: inline-block;
+    background-color: #fafafa;
+    padding: 0 5px;
+}
+
+.filled {
+    transform: translateY(-150%);
+    position: absolute;
+    font-size:10px;
 }
