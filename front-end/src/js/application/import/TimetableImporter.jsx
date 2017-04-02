@@ -1,5 +1,5 @@
 import React from 'react';
-import TimetableImporterView from "./TImetableImporterView";
+import TimetableImporterView from "./TimetableImporterView";
 
 export default class TimetableImporter extends React.Component {
     static contextTypes = {
@@ -24,7 +24,7 @@ export default class TimetableImporter extends React.Component {
         const file = event.target.elements["timetable"].files[0];
         const fileReader = new FileReader();
         fileReader.onload = () => {
-            this.context.restClient.multipartPostRequest("http://localhost:8080/import-timetable", fileReader.result)
+            this.context.restClient.multipartPostRequest("http://localhost:8080/api/import-timetable", fileReader.result)
                 .then(() =>this.setState({status: "COMPLETE"}))
                 .catch(() => this.setState({status: "FAIL"}));
         };

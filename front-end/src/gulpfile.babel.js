@@ -16,6 +16,7 @@ import cleanCSS from "gulp-clean-css";
 import restify from "restify";
 import inquirer from "inquirer";
 import clear from "cli-clear";
+import sleep from "system-sleep";
 
 const basePath = "target/_build/";
 const SOURCE_PATH = "";
@@ -26,6 +27,7 @@ const PATHS = {
     cssInput: [
         `${SOURCE_PATH}css/reset.css`,
         `${SOURCE_PATH}css/fonts.css`,
+        `${SOURCE_PATH}css/animation.css`,
         `${SOURCE_PATH}css/base.css`
     ],
     cssOutput: `${basePath}css`,
@@ -87,8 +89,8 @@ gulp.task('build:images', () => {
         .pipe(gulp.dest(PATHS.imagesOutput));
 });
 
-gulp.task("watch", function() {
-    const proxy = proxyMiddleware("/api", { target: "http://localhost:8080/"});
+gulp.task("watch", function () {
+    const proxy = proxyMiddleware("/api", {target: "http://localhost:8080/"});
     syncInstance.init({
         server: {
             port: 3000,
@@ -100,8 +102,8 @@ gulp.task("watch", function() {
     });
     new Promise(() => {
         gulp.watch(["js/**/*.jsx"], ["js-watch"]);
-        gulp.watch([ "css/*.css"], ["build:css"]);
-        gulp.watch([ "**/*.html"], ["html-watch"]);
+        gulp.watch(["css/*.css"], ["build:css"]);
+        gulp.watch(["**/*.html"], ["html-watch"]);
     });
 
 });
@@ -114,27 +116,59 @@ gulp.task("server", () => {
 
     server.use(restify.acceptParser(server.acceptable));
     server.use(restify.queryParser());
-    server.use(restify.bodyParser());
+    server.use(restify.bodyParser({
+        multipartHandler: function (part) {
+            part.on('data', function (data) {
+                /* do something with the multipart data */
+            });
+        },
+        multipartFileHandler: function (part) {
+            part.on('data', function (data) {
+                /* do something with the multipart file data */
+            });
+        },
+        uploadDir: "target/tmp",
+        multiples: true
+    }));
     server.use(restify.CORS());
 
     const values = {
-        "GET/api/my-message" : [200, 400, 401, 500]
+        "GET/api/my-message": [200, 400, 401, 500],
+        "POST/api/import-timetable": [200, 400, 401, 500],
+        "delay": [0, 250, 500, 1000, 5000]
+
     };
 
     let currentValue = {
-        "GET/api/my-message" : 0,
+        "GET/api/my-message": 0,
+        "POST/api/import-timetable": 0,
+        "delay": 0
 
     };
 
     server.get(/\/api\/my-message/, (req, res, next) => {
         const key = "GET/api/my-message";
         const code = values[key][currentValue[key]];
+        const delay = values["delay"][currentValue["delay"]];
+        sleep(delay);
         if (code === 200) {
-            res.send({
-                message: "My message"
-            });
+            setTimeout(() => res.send({message: "My message"}), delay);
         } else {
-            res.send(code);
+            setTimeout(() => res.send(code), delay);
+        }
+        return next();
+    });
+
+
+    server.post(/\/api\/import-timetable/, (req, res, next) => {
+        const key = "POST/api/import-timetable";
+        const code = values[key][currentValue[key]];
+        const delay = values["delay"][currentValue["delay"]];
+        sleep(delay);
+        if (code === 200) {
+            res.send({message: "My message"})
+        } else {
+            res.send(code)
         }
         return next();
     });
@@ -143,7 +177,6 @@ gulp.task("server", () => {
     server.listen(8080, () => {
         console.log("Server mock running on port: 8080");
     });
-
 
 
     const toggle = (key) => {
@@ -168,7 +201,7 @@ gulp.task("server", () => {
                 choices: choices
             }
         ]).then((answers) => {
-            if(answers.api === "exit") {
+            if (answers.api === "exit") {
                 process.exit();
             } else {
                 toggle(answers.api);
@@ -188,4 +221,4 @@ gulp.task('build', ['build:css', 'build:html', 'build:js', 'build:images']);
 
 gulp.task('build:prod', ['prod', 'build:css', 'build:html', 'build:js', 'build:images']);
 
-gulp.task('default', ['build:html', 'build:css',  'build:js', 'watch']);
+gulp.task('default', ['build:html', 'build:css', 'build:js', 'watch']);
