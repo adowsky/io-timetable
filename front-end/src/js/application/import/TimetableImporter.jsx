@@ -2,10 +2,17 @@ import React from 'react';
 import TimetableImporterView from "./TImetableImporterView";
 
 export default class TimetableImporter extends React.Component {
-    constructor(props) {
-        super(props);
+    static contextTypes = {
+        restClient: React.PropTypes.any
+    };
 
-        this.state = {};
+    constructor(...props) {
+        super(...props);
+
+        this.state = {
+            status: "",
+            timetable: null
+        };
 
         this.handle = this.handle.bind(this);
         this.send = this.send.bind(this);
@@ -13,19 +20,37 @@ export default class TimetableImporter extends React.Component {
 
     send(event) {
         event.preventDefault();
-        console.log("sending timetable...");
+
+        const file = event.target.elements["timetable"].files[0];
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.context.restClient.multipartPostRequest("http://localhost:8080/import-timetable", fileReader.result)
+                .then(() =>this.setState({status: "COMPLETE"}))
+                .catch(() => this.setState({status: "FAIL"}));
+        };
+        fileReader.readAsArrayBuffer(file);
+
+        this.setState({status: "SENDING"})
     }
 
     handle(event) {
         let newState = Object.assign({}, this.state);
-        newState[event.target.name] = event.target.value;
+        let value = event.target.value;
+        const lastSlashIndex = value.lastIndexOf("\\");
+        value = value.substr(lastSlashIndex + 1);
+        newState[event.target.name] = value;
         this.setState(newState);
     }
 
 
     render() {
         return (
-            <TimetableImporterView filename={this.state.timetable} handle={this.handle} send={this.send}/>
+            <TimetableImporterView
+                filename={this.state.timetable}
+                handle={this.handle}
+                send={this.send}
+                status={this.state.status}
+            />
         );
     }
 }
