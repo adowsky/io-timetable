@@ -32,6 +32,8 @@ TL:DR
 
 `mvn frontend:gulp`
 
+Powyższa konfiguracja jest obecnie wyłączona. Należy użyć gulpa przez npm
+
 ## Specyfikacja
 #### timetable-substitution-impl
 Wykorzystuje framework Spring. Wystawia punkty końcowe do poboru danych. 
