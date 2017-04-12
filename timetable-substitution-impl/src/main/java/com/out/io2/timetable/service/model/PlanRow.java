@@ -7,10 +7,10 @@ public class PlanRow {
     private final Long id;
     private final String day;
     private final String week;
-    private final long teacherID;
-    private final long lessonID;
+    private final Long teacherID;
+    private final Long lessonID;
 
-    public PlanRow(Long id, String day, String week, long teacherID, long lessonID) {
+    public PlanRow(Long id, String day, String week, Long teacherID, Long lessonID) {
         this.id = id;
         this.day = day;
         this.week = week;
@@ -30,11 +30,11 @@ public class PlanRow {
         return week;
     }
 
-    public long getTeacherID() {
+    public Long getTeacherID() {
         return teacherID;
     }
 
-    public long getLessonID() {
+    public Long getLessonID() {
         return lessonID;
     }
 }

@@ -11,7 +11,7 @@ private PlanRepository planRepository;
     }
 
     public void save(Plan plan) {
-        PlanDAO dao = new PlanDAO(plan.getId(),plan.getSemestr(), plan.getGroupID());
+        PlanDAO dao = new PlanDAO(plan.getId(),plan.getSemester(), plan.getGroupID());
         planRepository.save(dao);
     }
 }
