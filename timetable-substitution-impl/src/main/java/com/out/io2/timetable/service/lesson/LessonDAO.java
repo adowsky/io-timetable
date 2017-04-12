@@ -1,22 +1,23 @@
 package com.out.io2.timetable.service.lesson;
 
 import javax.persistence.*;
-/**
- * Created by Ania on 2017-04-12.
- */
+
+
 @Entity
 @Table(name = "lesson")
 public class LessonDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "lesson_ID")
+    private long lessonId;
     private String subject;
     private String hour;
     private String classroom;
     private String type;
-    @Column(name = "lesson_ID")
-    private long lessonId;
 
-    LessonDAO(String hour, String classroom, String type, long lessonId) {
+
+    LessonDAO(String subject, String hour, String classroom, String type, long lessonId) {
+        this.subject = subject;
         this.hour = hour;
         this.classroom = classroom;
         this.type = type;

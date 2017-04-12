@@ -1,7 +1,7 @@
 package com.out.io2.timetable.service.contact;
 
-/**
- * Created by Ania on 2017-04-12.
- */
-public interface ContactRepository {
+import org.springframework.data.repository.CrudRepository;
+
+
+public interface ContactRepository extends CrudRepository<ContactDAO,Long> {
 }

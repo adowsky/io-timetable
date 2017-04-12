@@ -2,61 +2,77 @@ package com.out.io2.timetable.service.onCallTime;
 
 import javax.persistence.*;
 
-/**
- * Created by Ania on 2017-04-12.
- */
+
 @Entity
 @Table(name = "on_call_time")
 public class OnCallTimeDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "old_date")
-    private String oldDate;
-    @Column(name = "new_date")
-    private String newDate;
-    @Column(name = "change_in_plan_ID")
-    private long changeInPlanID;
-    @Column(name = "lesson_lesson_ID")
-    private long lessonId;
+    @Column(name = "on_call_time_ID")
+    private long onCallTimeId;
+    private String day;
+    private String room;
+    private String from;
+    private String to;
+    @Column(name = "teacher_teacher_ID")
+    private long teacherId;
 
-    OnCallTimeDAO(String newDate, long changeInPlanID, long lessonId) {
-        this.newDate = newDate;
-        this.changeInPlanID = changeInPlanID;
-        this.lessonId = lessonId;
+    OnCallTimeDAO(long onCallTimeId, String room, String from, String to, long teacherId) {
+        this.onCallTimeId=onCallTimeId;
+        this.room = room;
+        this.from = from;
+        this.to = to;
+        this.teacherId = teacherId;
     }
 
     public OnCallTimeDAO() {
     }
 
-    public String getOldDate() {
-        return oldDate;
+    public long getOnCallTimeId() {
+        return onCallTimeId;
     }
 
-    public void setOldDate(String oldDate) {
-        this.oldDate = oldDate;
+    public void setOnCallTimeId(long onCallTimeId) {
+        this.onCallTimeId = onCallTimeId;
     }
 
-    public String getNewDate() {
-        return newDate;
+    public String getDay() {
+        return day;
     }
 
-    public void setNewDate(String newDate) {
-        this.newDate = newDate;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public long getChangeInPlanID() {
-        return changeInPlanID;
+    public String getRoom() {
+        return room;
     }
 
-    public void setChangeInPlanID(long changeInPlanID) {
-        this.changeInPlanID = changeInPlanID;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
-    public long getLessonId() {
-        return lessonId;
+    public String getFrom() {
+        return from;
     }
 
-    public void setLessonId(long lessonId) {
-        this.lessonId = lessonId;
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(long teacherID) {
+        this.teacherId = teacherID;
     }
 }

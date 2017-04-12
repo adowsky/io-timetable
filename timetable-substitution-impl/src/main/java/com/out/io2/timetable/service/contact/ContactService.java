@@ -1,7 +1,16 @@
 package com.out.io2.timetable.service.contact;
 
-/**
- * Created by Ania on 2017-04-12.
- */
+import com.out.io2.timetable.service.model.Contact;
+
 public class ContactService {
+    private ContactRepository contactRepository;
+
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+
+    public void save(Contact contact){
+        ContactDAO dao=new ContactDAO(contact.getContactId(),contact.getEmail(),contact.getPhoneNumber(),contact.getTeacherId());
+        contactRepository.save(dao);
+    }
 }

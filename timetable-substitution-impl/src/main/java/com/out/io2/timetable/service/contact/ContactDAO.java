@@ -3,9 +3,7 @@ package com.out.io2.timetable.service.contact;
 import javax.annotation.*;
 import javax.persistence.*;
 
-/**
- * Created by Ania on 2017-04-12.
- */
+
 
 
 @Entity
@@ -14,19 +12,30 @@ import javax.persistence.*;
 public class ContactDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "contact_ID")
+    private long contactId;
     private String email;
     @Column(name = "phone_number")
     private long phoneNumber;
     @Column(name = "Teacher_teacher_ID")
     private long teacherId;
 
-    ContactDAO(String email, long phoneNumber, long teacherId) {
+    ContactDAO(long contactId, String email, long phoneNumber, long teacherId) {
+        this.contactId=contactId;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.teacherId = teacherId;
     }
 
     public ContactDAO() {
+    }
+
+    public long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(long contactId) {
+        this.contactId = contactId;
     }
 
     public String getEmail() {
@@ -45,11 +54,11 @@ public class ContactDAO {
         this.phoneNumber = phoneNumber;
     }
 
-    public long getTeacherID() {
+    public long getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherID(long teacherId) {
+    public void setTeacherId(long teacherId) {
         this.teacherId = teacherId;
     }
 }
