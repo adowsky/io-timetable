@@ -1,6 +1,6 @@
 package com.out.io2.timetable.controllers;
 
-import com.out.io2.timetable.model.ModelObject;
+import com.out.io2.timetable.api.ModelObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.out.io2.timetable.model;
+package com.out.io2.timetable.api;
 
 
 public class ModelObject {
