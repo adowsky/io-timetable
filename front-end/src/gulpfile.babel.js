@@ -160,7 +160,7 @@ gulp.task("server", () => {
     });
 
 
-    server.post(/\/api\/import-timetable/, (req, res, next) => {
+    server.post(/\/api\/timetable/, (req, res, next) => {
         const key = "POST/api/import-timetable";
         const code = values[key][currentValue[key]];
         const delay = values["delay"][currentValue["delay"]];

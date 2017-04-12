@@ -24,7 +24,10 @@ export default class TimetableImporter extends React.Component {
         const file = event.target.elements["timetable"].files[0];
         const fileReader = new FileReader();
         fileReader.onload = () => {
-            this.context.restClient.multipartPostRequest("http://localhost:8080/api/import-timetable", fileReader.result)
+            const headers = {
+                "Content-Type": "text/csv"
+            };
+            this.context.restClient.multipartPostRequest("http://localhost:8080/api/timetable", fileReader.result, headers)
                 .then(() =>this.setState({status: "COMPLETE"}))
                 .catch(() => this.setState({status: "FAIL"}));
         };
