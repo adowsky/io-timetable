@@ -12,8 +12,6 @@
     <artifactId>front-end</artifactId>
 
     <build>
-        <!--There is a possibility to use this configuration later-->
-
         <!--<plugins>-->
             <!--<plugin>-->
                 <!--<groupId>com.github.eirslett</groupId>-->
