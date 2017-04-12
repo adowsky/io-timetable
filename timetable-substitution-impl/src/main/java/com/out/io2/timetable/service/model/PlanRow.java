@@ -1,0 +1,40 @@
+package com.out.io2.timetable.service.model;
+
+/**
+ * Created by geral_000 on 2017-04-12.
+ */
+public class PlanRow {
+    private final Long id;
+    private final String day;
+    private final String week;
+    private final long teacherID;
+    private final long lessonID;
+
+    public PlanRow(Long id, String day, String week, long teacherID, long lessonID) {
+        this.id = id;
+        this.day = day;
+        this.week = week;
+        this.teacherID = teacherID;
+        this.lessonID = lessonID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public long getTeacherID() {
+        return teacherID;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+}
