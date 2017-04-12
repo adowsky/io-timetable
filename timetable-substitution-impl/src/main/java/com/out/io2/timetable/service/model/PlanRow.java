@@ -10,7 +10,7 @@ public class PlanRow {
     private final Long teacherID;
     private final Long lessonID;
 
-    public PlanRow(Long id, String day, String week, long teacherID, long lessonID) {
+    public PlanRow(Long id, String day, String week, Long teacherID, Long lessonID) {
         this.id = id;
         this.day = day;
         this.week = week;

@@ -5,7 +5,7 @@ public class Plan {
     private final String semester;
     private final Long groupID;
 
-    public Plan(Long id, String semester, long groupID) {
+    public Plan(Long id, String semester, Long groupID) {
         this.id = id;
         this.semester = semester;
         this.groupID = groupID;
