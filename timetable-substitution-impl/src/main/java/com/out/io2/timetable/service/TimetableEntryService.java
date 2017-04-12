@@ -44,7 +44,7 @@ public class TimetableEntryService {
 
     private void generateConstructors(TimetableEntry entry) {
         lesson=new Lesson(null,entry.getSubject(),entry.getHour(),entry.getClassroom(),entry.getType());
-        plan=new Plan(null,entry.);
+        plan=new Plan(null,null,null);
         planRow=new PlanRow();
         rowInPlan=new RowInPlan();
 

@@ -7,8 +7,8 @@ public class PlanRow {
     private final Long id;
     private final String day;
     private final String week;
-    private final long teacherID;
-    private final long lessonID;
+    private final Long teacherID;
+    private final Long lessonID;
 
     public PlanRow(Long id, String day, String week, long teacherID, long lessonID) {
         this.id = id;

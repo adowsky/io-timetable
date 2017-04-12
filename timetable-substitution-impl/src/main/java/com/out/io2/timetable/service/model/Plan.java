@@ -3,7 +3,7 @@ package com.out.io2.timetable.service.model;
 public class Plan {
     private final Long id;
     private final String semester;
-    private final long groupID;
+    private final Long groupID;
 
     public Plan(Long id, String semester, long groupID) {
         this.id = id;
