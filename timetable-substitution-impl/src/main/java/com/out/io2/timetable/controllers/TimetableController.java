@@ -1,6 +1,7 @@
 package com.out.io2.timetable.controllers;
 
 import com.out.io2.timetable.api.TimetableCsvRequest;
+import com.out.io2.timetable.api.TimetableRequest;
 import com.out.io2.timetable.service.TimetableEntryService;
 import com.out.io2.timetable.service.model.TimetableEntry;
 import org.dozer.DozerBeanMapper;
@@ -29,10 +30,9 @@ public class TimetableController {
         this.timetableEntryService = entryService;
     }
 
-    @PostMapping(value = "/timetable")
-    ResponseEntity getMyEndpoint(@RequestBody byte[] csvFile) throws IOException {
-        List<TimetableCsvRequest> requests = timetableRequestParser.parse(csvFile);
-        requests.forEach(request -> timetableEntryService.save(dozerBeanMapper.map(request, TimetableEntry.class)));
+    @PostMapping(value = "/timetable", consumes = "text/csv")
+    ResponseEntity getMyEndpoint(@RequestBody TimetableRequest timetableRequest) throws IOException {
+        timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(dozerBeanMapper.map(request, TimetableEntry.class)));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
