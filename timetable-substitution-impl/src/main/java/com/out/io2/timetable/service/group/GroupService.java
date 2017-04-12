@@ -2,7 +2,7 @@ package com.out.io2.timetable.service.group;
 
 import com.out.io2.timetable.service.model.Group;
 import org.springframework.stereotype.Service;
-
+@Service
 public class GroupService {
     private GroupRepository groupRepository;
 

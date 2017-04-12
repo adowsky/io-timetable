@@ -2,7 +2,7 @@ package com.out.io2.timetable.service.planRow;
 
 import com.out.io2.timetable.service.model.PlanRow;
 import org.springframework.stereotype.Service;
-
+@Service
 public class PlanRowService {
     private PlanRowRepository planRowRepository;
 

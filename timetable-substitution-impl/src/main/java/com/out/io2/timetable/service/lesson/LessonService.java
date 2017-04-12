@@ -1,8 +1,9 @@
 package com.out.io2.timetable.service.lesson;
 
 import com.out.io2.timetable.service.model.Lesson;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class LessonService {
     private LessonRepository lessonRepository;
 
