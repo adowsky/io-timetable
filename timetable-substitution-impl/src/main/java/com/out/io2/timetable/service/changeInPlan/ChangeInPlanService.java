@@ -1,8 +1,9 @@
 package com.out.io2.timetable.service.changeInPlan;
 
 import com.out.io2.timetable.service.model.ChangeInPlan;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class ChangeInPlanService {
 private ChangeInPlanRepository changeInPlanRepository;
 
