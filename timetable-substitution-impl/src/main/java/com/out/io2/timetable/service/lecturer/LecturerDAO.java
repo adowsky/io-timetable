@@ -7,10 +7,13 @@ import javax.persistence.*;
 public class LecturerDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "teacher_ID")
     private long id;
+    @Column(name = "first_name")
     private String name;
+    @Column(name = "last_name")
     private String surname;
-    @Column(name = "academic_title")
+    @Column(name = "degree")
     private String academicTitle;
 
     LecturerDAO(long id, String name, String surname, String academicTitle) {
