@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Component
 public class TimetableRequestParser {
 
-    public List<TimetableCsvRequest> parse(byte[] csvFile) throws IOException {
+    List<TimetableCsvRequest> parse(byte[] csvFile) throws IOException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(TimetableCsvRequest.class).withHeader();
+        CsvSchema schema = mapper.schemaFor(TimetableCsvRequest.class).withHeader().withColumnSeparator(';');
         ObjectReader reader = mapper.readerFor(TimetableCsvRequest.class).with(schema);
 
         return reader.readValues(csvFile).readAll().stream()

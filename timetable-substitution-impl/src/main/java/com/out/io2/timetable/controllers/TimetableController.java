@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,14 +25,14 @@ public class TimetableController {
     private TimetableEntryService timetableEntryService;
 
 
-    public TimetableController(TimetableRequestParser timetableRequestParser, DozerBeanMapper dozerBeanMapper, TimetableEntryService entryService) {
+    TimetableController(TimetableRequestParser timetableRequestParser, DozerBeanMapper dozerBeanMapper, TimetableEntryService entryService) {
         this.timetableRequestParser = timetableRequestParser;
         this.dozerBeanMapper = dozerBeanMapper;
         this.timetableEntryService = entryService;
     }
 
     @PostMapping(value = "/timetable", consumes = "text/csv")
-    ResponseEntity getMyEndpoint(@RequestBody TimetableRequest timetableRequest) throws IOException {
+    ResponseEntity getMyEndpoint(@RequestBody @Valid TimetableRequest timetableRequest) throws IOException {
         timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(dozerBeanMapper.map(request, TimetableEntry.class)));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
