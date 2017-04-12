@@ -19,7 +19,7 @@ public class Plan {
         return semester;
     }
 
-    public long getGroupID() {
+    public Long getGroupID() {
         return groupID;
     }
 }

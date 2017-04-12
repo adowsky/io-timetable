@@ -30,11 +30,11 @@ public class PlanRow {
         return week;
     }
 
-    public long getTeacherID() {
+    public Long getTeacherID() {
         return teacherID;
     }
 
-    public long getLessonID() {
+    public Long getLessonID() {
         return lessonID;
     }
 }
