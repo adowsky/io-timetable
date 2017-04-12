@@ -2,15 +2,9 @@ package com.out.io2.timetable.api;
 
 
 public class LecturerRequest {
-    private final String name;
-    private final String surname;
-    private final String academicTitle;
-
-    public LecturerRequest(String name, String surname, String academicTitle) {
-        this.name = name;
-        this.surname = surname;
-        this.academicTitle = academicTitle;
-    }
+    private String name;
+    private String surname;
+    private String academicTitle;
 
     public String getName() {
         return name;
