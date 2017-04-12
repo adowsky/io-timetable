@@ -5,9 +5,9 @@ public class Group {
     private final String department;
     private final String faculty;
     private final String group_number;
-    private final Int year;
+    private final int year;
 
-    public Group(Long id, String department, String faculty, String group_number, Int year) {
+    public Group(Long id, String department, String faculty, String group_number, int year) {
         this.id = id;
         this.department = department;
         this.faculty = faculty;
@@ -31,7 +31,7 @@ public class Group {
         return group_number;
     }
 
-    public Int getYear() {
+    public int getYear() {
         return year;
     }
 }

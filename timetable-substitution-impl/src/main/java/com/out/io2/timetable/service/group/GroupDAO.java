@@ -23,6 +23,9 @@ public class GroupDAO {
         this.groupNumber = groupNumber;
     }
 
+    public GroupDAO() {
+    }
+
     public long getId() {
         return id;
     }
