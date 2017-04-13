@@ -37,15 +37,11 @@ export default class RestClient {
             .then(response => JSON.parse(response));
     }
 
-    multipartPostRequest(url = "", body = {}) {
-        const formData = new FormData();
-        for(let name in body) {
-            formData.append(name, body[name]);
-        }
-
+    multipartPostRequest(url = "", body = {}, headers= {}) {
         return fetch(url, {
             method: "POST",
-            body: formData
+            body: body,
+            headers:headers
         })
             .then(response => {
             if (response.status >= 200 && response.status < 300) {
@@ -53,11 +49,17 @@ export default class RestClient {
                 return response;
             } else {
                 let error = new Error(response.statusText);
-                error.response = response;
+                error.response = response.json();
+                error.response.then(e => console.error(`${JSON.stringify(response)}`));
+
                 throw error;
             }
         })
-            .then(response =>  response.json())
+            .then(response => response.json()
+                .catch(() => {
+                return {};
+                })
+            )
             .then(response => {
                 console.debug(`RESPONSE: ${JSON.stringify(response)}`);
                 return response;

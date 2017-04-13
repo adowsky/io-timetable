@@ -1,48 +1,68 @@
 package com.out.io2.timetable.service.rowInPlan;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "row_in_plan")
 public class RowInPlanDAO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @Column(name = "plan_plan_ID")
-    private long planId;
-    @Column(name = "plan_row_plan_row_ID")
-    private long rowId;
+    @EmbeddedId
+    private CompositeId id;
 
-    public RowInPlanDAO(long id,long planId, long rowId) {
-        this.id=id;
-        this.planId = planId;
-        this.rowId = rowId;
+    RowInPlanDAO(Long planId, Long rowId) {
+        id = new CompositeId(planId, rowId);
     }
 
     public RowInPlanDAO() {
     }
 
-    public long getId() {
-        return id;
+
+    public Long getPlanId() {
+        return id.planId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPlanId(Long planId) {
+        this.id.planId = planId;
     }
 
-    public long getPlanId() {
-        return planId;
+    public Long getRowId() {
+        return id.rowId;
     }
 
-    public void setPlanId(long planId) {
-        this.planId = planId;
+    public void setRowId(Long rowId) {
+        this.id.rowId = rowId;
     }
 
-    public long getRowId() {
-        return rowId;
-    }
+    @Embeddable
+    static class CompositeId implements Serializable {
+        @Column(name = "plan_plan_ID")
+        private Long planId;
+        @Column(name = "plan_row_plan_row_ID")
+        private Long rowId;
 
-    public void setRowId(long rowId) {
-        this.rowId = rowId;
+        CompositeId(Long planId, Long rowId) {
+            this.planId = planId;
+            this.rowId = rowId;
+        }
+
+        public CompositeId() {}
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            CompositeId that = (CompositeId) o;
+
+            if (!planId.equals(that.planId)) return false;
+            return rowId.equals(that.rowId);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = planId.hashCode();
+            result = 31 * result + rowId.hashCode();
+            return result;
+        }
     }
 }

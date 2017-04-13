@@ -3,12 +3,12 @@ package com.out.io2.timetable.service.group;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "group")
+@Table(name = "students_group")
 public class GroupDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "group_ID")
-    private long id;
+    @Column(name = "group_id")
+    private Long id;
     private String department;
     private String faculty;
     private int year;
@@ -26,11 +26,11 @@ public class GroupDAO {
     public GroupDAO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,7 +1,9 @@
 package com.out.io2.timetable.service.contact;
 
 import com.out.io2.timetable.service.model.Contact;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ContactService {
     private ContactRepository contactRepository;
 

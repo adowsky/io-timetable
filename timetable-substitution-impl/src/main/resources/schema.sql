@@ -27,7 +27,7 @@ CREATE TABLE contact (
   teacher_teacher_id NUMBER NOT NULL
 );
 
-CREATE TABLE "group" (
+CREATE TABLE students_group (
   department   VARCHAR2(30 CHAR),
   faculty      VARCHAR2(30 CHAR),
   year         NUMBER(1),
@@ -35,14 +35,14 @@ CREATE TABLE "group" (
   group_id     INT AUTO_INCREMENT NOT NULL
 );
 
-ALTER TABLE "group"
+ALTER TABLE students_group
   ADD CONSTRAINT group_pk PRIMARY KEY (group_id);
 
 CREATE TABLE lesson (
   subject   VARCHAR2(30 CHAR),
   hour      VARCHAR2(30 CHAR),
   classroom VARCHAR2(30 CHAR),
-  type      VARCHAR2(10 CHAR),
+  type      VARCHAR2(20 CHAR),
   lesson_id INT AUTO_INCREMENT NOT NULL
 );
 
@@ -50,8 +50,8 @@ ALTER TABLE lesson
   ADD CONSTRAINT lesson_pk PRIMARY KEY (lesson_id);
 
 CREATE TABLE "on-call_time" (
-  day                VARCHAR2(10 CHAR),
-  room               VARCHAR2(10 CHAR),
+  day                VARCHAR2(20 CHAR),
+  room               VARCHAR2(20 CHAR),
   "from"             DATE,
   "to"               DATE,
   teacher_teacher_id NUMBER NOT NULL
@@ -71,8 +71,8 @@ ALTER TABLE plan
   ADD CONSTRAINT plan_pk PRIMARY KEY (plan_id);
 
 CREATE TABLE plan_row (
-  day_of_the_week    VARCHAR2(10 CHAR),
-  week               VARCHAR2(10 CHAR),
+  day_of_the_week    VARCHAR2(20 CHAR),
+  week               VARCHAR2(20 CHAR),
   plan_row_id        INT AUTO_INCREMENT NOT NULL,
   teacher_teacher_id NUMBER             NOT NULL,
   lesson_lesson_id   NUMBER             NOT NULL
@@ -87,7 +87,7 @@ ALTER TABLE plan_row
 
 CREATE TABLE row_in_plan (
   plan_row_plan_row_id NUMBER             NOT NULL,
-  plan_plan_id         INT AUTO_INCREMENT NOT NULL
+  plan_plan_id         NUMBER NOT NULL
 );
 
 ALTER TABLE row_in_plan
@@ -133,7 +133,7 @@ REFERENCES teacher (teacher_id);
 
 ALTER TABLE plan
   ADD CONSTRAINT plan_group_fk FOREIGN KEY (group_group_id)
-REFERENCES "group" (group_id);
+REFERENCES students_group (group_id);
 
 ALTER TABLE plan_row
   ADD CONSTRAINT plan_row_lesson_fk FOREIGN KEY (lesson_lesson_id)

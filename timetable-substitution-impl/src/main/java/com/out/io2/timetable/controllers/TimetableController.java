@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class TimetableController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TimetableController.class);
 
@@ -32,9 +33,14 @@ public class TimetableController {
     }
 
     @PostMapping(value = "/timetable", consumes = "text/csv")
-    ResponseEntity getMyEndpoint(@RequestBody @Valid TimetableRequest timetableRequest) throws IOException {
-        timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(dozerBeanMapper.map(request, TimetableEntry.class)));
+    ResponseEntity timetableEntryAdd(@RequestBody @Valid TimetableRequest timetableRequest) throws IOException {
+        timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(map(request)));
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    private TimetableEntry map(TimetableCsvRequest request) {
+        return new TimetableEntry(request.getDay(), request.getWeek(), request.getSubject(), request.getHour(), request.getClassroom(), request.getType(), request.getTeacherId(), request.getFaculty(), request.getDegreeCourse(), request.getGroup());
+
     }
 
 }

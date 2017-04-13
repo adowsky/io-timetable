@@ -2,8 +2,8 @@ package com.out.io2.timetable.api;
 
 
 public class ErrorMessage {
-    String message;
-    String filed;
+    private String message;
+    private String filed;
 
     public ErrorMessage(String message, String filed) {
         this.message = message;
