@@ -4,11 +4,11 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "on_call_time")
+@Table(name = "on-call_time")
 public class OnCallTimeDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "on_call_time_ID")
+    @Column(name = "on-call_time_ID")
     private long onCallTimeId;
     private String day;
     private String room;
