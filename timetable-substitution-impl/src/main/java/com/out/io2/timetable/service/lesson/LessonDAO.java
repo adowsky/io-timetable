@@ -8,15 +8,15 @@ import javax.persistence.*;
 public class LessonDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "lesson_ID")
-    private long lessonId;
+    @Column(name = "LESSON_ID")
+    private Long lessonId;
     private String subject;
     private String hour;
     private String classroom;
     private String type;
 
 
-    LessonDAO(String subject, String hour, String classroom, String type, long lessonId) {
+    LessonDAO(String subject, String hour, String classroom, String type, Long lessonId) {
         this.subject = subject;
         this.hour = hour;
         this.classroom = classroom;
@@ -59,7 +59,7 @@ public class LessonDAO {
         this.type = type;
     }
 
-    public long getLessonId() {
+    public Long getLessonId() {
         return lessonId;
     }
 

@@ -3,7 +3,7 @@ package com.out.io2.timetable.service.lecturer;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lecturers")
+@Table(name = "teacher")
 public class LecturerDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

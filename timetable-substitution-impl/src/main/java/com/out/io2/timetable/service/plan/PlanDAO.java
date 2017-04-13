@@ -8,12 +8,12 @@ public class PlanDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "plan_ID")
-    private long id;
+    private Long id;
     private String semester;
     @Column(name = "group_group_ID")
-    private long groupID;
+    private Long groupID;
 
-    public PlanDAO(long id,String semester, long groupID) {
+    PlanDAO(Long id,String semester, Long groupID) {
         this.semester = semester;
         this.groupID = groupID;
         this.id=id;
@@ -22,11 +22,11 @@ public class PlanDAO {
     public PlanDAO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,11 +38,11 @@ public class PlanDAO {
         this.semester = semester;
     }
 
-    public long getGroupID() {
+    public Long getGroupID() {
         return groupID;
     }
 
-    public void setGroupID(long groupID) {
+    public void setGroupID(Long groupID) {
         this.groupID = groupID;
     }
 }
