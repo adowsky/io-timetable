@@ -15,6 +15,10 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller class that services request targeted to /api/ endpoints
+ */
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -32,8 +36,13 @@ public class TimetableController {
         this.timetableEntryService = entryService;
     }
 
+    /**
+     * Processes data given from request. Adds timetable entry to database
+     * @param timetableRequest converted csv request
+     * @return processing status
+     */
     @PostMapping(value = "/timetable", consumes = "text/csv")
-    ResponseEntity timetableEntryAdd(@RequestBody @Valid TimetableRequest timetableRequest) throws IOException {
+    ResponseEntity timetableEntryAdd(@RequestBody @Valid TimetableRequest timetableRequest) {
         timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(map(request)));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

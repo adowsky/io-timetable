@@ -9,10 +9,11 @@ import com.out.io2.timetable.service.rowInPlan.RowInPlanService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Big Service to process timetable entries
+ */
 @Service
 public class TimetableEntryService {
-
-
     private GroupService groupService;
     private LessonService lessonService;
     private PlanService planService;
@@ -20,6 +21,14 @@ public class TimetableEntryService {
     private RowInPlanService rowInPlanService;
 
 
+    /**
+     *
+     * @param lessonService given lesson service
+     * @param planService given plan service
+     * @param planRowService given plan row service
+     * @param rowInPlanService given row in plan service
+     * @param groupService given group service
+     */
     public TimetableEntryService(LessonService lessonService, PlanService planService, PlanRowService planRowService, RowInPlanService rowInPlanService, GroupService groupService) {
         this.lessonService = lessonService;
         this.planService = planService;
@@ -28,6 +37,10 @@ public class TimetableEntryService {
         this.groupService = groupService;
     }
 
+    /**
+     * Saves timetable entry to remote repository. Processed in transaction
+     * @param entry given timetable entry
+     */
     @Transactional
     public void save(TimetableEntry entry) {
         Long lessonId = lessonService.save(new Lesson(null, entry.getSubject(), entry.getHour(), entry.getClassroom(), entry.getType()));
