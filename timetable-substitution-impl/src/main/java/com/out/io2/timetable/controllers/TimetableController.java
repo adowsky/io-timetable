@@ -2,6 +2,7 @@ package com.out.io2.timetable.controllers;
 
 import com.out.io2.timetable.api.TimetableCsvRequest;
 import com.out.io2.timetable.api.TimetableRequest;
+import com.out.io2.timetable.parers.TimetableRequestParser;
 import com.out.io2.timetable.service.TimetableEntryService;
 import com.out.io2.timetable.service.model.TimetableEntry;
 import org.dozer.DozerBeanMapper;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Controller class that services request targeted to /api/ endpoints

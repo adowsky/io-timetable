@@ -1,14 +1,13 @@
 package com.out.io2.timetable.controllers;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.out.io2.timetable.converters.TimetableCsvMessageConverter;
 import org.dozer.DozerBeanMapper;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.bind.support.WebArgumentResolver;
 
 import java.util.Collections;
 

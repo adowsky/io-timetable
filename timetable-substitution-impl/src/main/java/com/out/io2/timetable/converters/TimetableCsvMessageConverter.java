@@ -1,7 +1,8 @@
-package com.out.io2.timetable.controllers;
+package com.out.io2.timetable.converters;
 
 
 import com.out.io2.timetable.api.TimetableRequest;
+import com.out.io2.timetable.parers.TimetableRequestParser;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;

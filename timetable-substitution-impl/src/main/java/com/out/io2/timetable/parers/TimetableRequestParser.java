@@ -1,4 +1,4 @@
-package com.out.io2.timetable.controllers;
+package com.out.io2.timetable.parers;
 
 
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class TimetableRequestParser {
 
-    List<TimetableCsvRequest> parse(byte[] csvFile) throws IOException {
+    public List<TimetableCsvRequest> parse(byte[] csvFile) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(TimetableCsvRequest.class).withHeader().withColumnSeparator(';');
         ObjectReader reader = mapper.readerFor(TimetableCsvRequest.class).with(schema);
