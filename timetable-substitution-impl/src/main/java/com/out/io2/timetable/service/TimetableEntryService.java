@@ -1,5 +1,6 @@
 package com.out.io2.timetable.service;
 
+import com.out.io2.timetable.exceptions.NoSuchIdentifierException;
 import com.out.io2.timetable.service.group.GroupService;
 import com.out.io2.timetable.service.lesson.LessonService;
 import com.out.io2.timetable.service.model.*;
@@ -44,10 +45,13 @@ public class TimetableEntryService {
     @Transactional
     public void save(TimetableEntry entry) {
         Long lessonId = lessonService.save(new Lesson(null, entry.getSubject(), entry.getHour(), entry.getClassroom(), entry.getType()));
-        Long groupId = groupService.getGroupId(entry.getFaculty(), entry.getGroup());
+        Long groupId = groupService.getGroupId(entry.getFaculty(), entry.getDegreeCourse(), entry.getYear(), entry.getGroup())
+                .orElseThrow(() -> new NoSuchIdentifierException(String.format("Cannot find group with department=%s, faculty=%s, year=%d, group=%s ",
+                        entry.getFaculty(), entry.getDegreeCourse(), entry.getYear(), entry.getGroup())));
 
         Long planId = planService.getPlanIdByGroup(groupId)
-                .orElseGet(() -> planService.save(new Plan(null, null, groupService.getGroupId(entry.getFaculty(), entry.getGroup()))));
+                .orElseGet(() -> planService.save(new Plan(null, String.valueOf(entry.getYear()), groupId)));
+
         Long planRowId = planRowService.save(new PlanRow(null, entry.getDay(), entry.getWeek(), Long.valueOf(entry.getTeacherId()), lessonId));
         rowInPlanService.save(new RowInPlan( planRowId, planId));
     }

@@ -25,14 +25,11 @@ import java.util.List;
 public class TimetableController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TimetableController.class);
 
-    private TimetableRequestParser timetableRequestParser;
-    private DozerBeanMapper dozerBeanMapper;
     private TimetableEntryService timetableEntryService;
 
 
+
     TimetableController(TimetableRequestParser timetableRequestParser, DozerBeanMapper dozerBeanMapper, TimetableEntryService entryService) {
-        this.timetableRequestParser = timetableRequestParser;
-        this.dozerBeanMapper = dozerBeanMapper;
         this.timetableEntryService = entryService;
     }
 
@@ -41,14 +38,20 @@ public class TimetableController {
      * @param timetableRequest converted csv request
      * @return processing status
      */
-    @PostMapping(value = "/timetable", consumes = "text/csv")
-    ResponseEntity timetableEntryAdd(@RequestBody @Valid TimetableRequest timetableRequest) {
-        timetableRequest.getTimetableCsvRequests().forEach(request -> timetableEntryService.save(map(request)));
+    @PostMapping(value = "/{department}/{faculty}/{semester}/{group}/timetable", consumes = "text/csv")
+    ResponseEntity timetableEntryAdd(@RequestBody @Valid TimetableRequest timetableRequest,
+                                     @PathVariable String department, @PathVariable String faculty,
+                                     @PathVariable int semester, @PathVariable String group) {
+        timetableRequest.getTimetableCsvRequests()
+                .forEach(request -> timetableEntryService.save(map(request, department,faculty, semester, group)));
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    private TimetableEntry map(TimetableCsvRequest request) {
-        return new TimetableEntry(request.getDay(), request.getWeek(), request.getSubject(), request.getHour(), request.getClassroom(), request.getType(), request.getTeacherId(), request.getFaculty(), request.getDegreeCourse(), request.getGroup());
+    private TimetableEntry map(TimetableCsvRequest request, String department, String faculty, int semester, String group) {
+        return new TimetableEntry(request.getDay(), request.getWeek(), request.getSubject(), request.getHour(),
+                request.getClassroom(), request.getType(), request.getTeacherId(), department,
+                faculty, group, semester);
 
     }
 

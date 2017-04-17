@@ -23,15 +23,6 @@ public class TimetableCsvRequest {
     private String type;
     @Pattern(regexp = "\\d+")
     private String teacherId;
-    @NotNull
-    @Size(min = 1)
-    private String faculty;
-    @NotNull
-    @Size(min = 1)
-    private String degreeCourse;
-    @NotNull
-    @Size(min = 1)
-    private String group;
 
     public TimetableCsvRequest(String day, String week, String subject, String hour, String classroom, String type, String teacherId, String faculty, String degreeCourse, String group) {
         this.day = day;
@@ -41,9 +32,6 @@ public class TimetableCsvRequest {
         this.classroom = classroom;
         this.type = type;
         this.teacherId = teacherId;
-        this.faculty = faculty;
-        this.degreeCourse = degreeCourse;
-        this.group = group;
     }
 
     public TimetableCsvRequest(){}
@@ -102,30 +90,6 @@ public class TimetableCsvRequest {
 
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
-    public String getDegreeCourse() {
-        return degreeCourse;
-    }
-
-    public void setDegreeCourse(String degreeCourse) {
-        this.degreeCourse = degreeCourse;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
     }
 
     @Override

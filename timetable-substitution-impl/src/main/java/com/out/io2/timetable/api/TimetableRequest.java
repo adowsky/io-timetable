@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TimetableRequest {
     @Valid
-    List<TimetableCsvRequest> timetableCsvRequests;
+    private List<TimetableCsvRequest> timetableCsvRequests;
 
     public TimetableRequest(List<TimetableCsvRequest> timetableCsvRequests) {
         this.timetableCsvRequests = timetableCsvRequests;

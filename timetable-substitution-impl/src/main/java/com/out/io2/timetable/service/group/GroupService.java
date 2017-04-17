@@ -3,6 +3,8 @@ package com.out.io2.timetable.service.group;
 import com.out.io2.timetable.service.model.Group;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Service that serves and saves student groups data from and to remote repository.
  */
@@ -33,8 +35,8 @@ public class GroupService {
      * @param number given number
      * @return group identifier for given data
      */
-    public Long getGroupId(String faculty, String number) {
-        GroupDAO dao =  groupRepository.findFirstByFacultyAndGroupNumber(faculty, number);
-        return dao.getId();
+    public Optional<Long> getGroupId(String department, String faculty, int year, String number) {
+        GroupDAO dao =  groupRepository.findFirstByDepartmentAndFacultyAndYearAndGroupNumber(department, faculty, year, number);
+        return Optional.ofNullable(dao.getId());
     }
 }
