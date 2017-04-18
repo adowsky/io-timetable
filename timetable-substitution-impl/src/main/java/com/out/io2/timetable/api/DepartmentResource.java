@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class DepartmentResource {
     private String name;
-    private Map<String, List<String>> faculties;
+    private Map<String, Map<Integer, List<String>>> faculties;
 
-    public DepartmentResource(String name, Map<String, List<String>> faculties) {
+    public DepartmentResource(String name, Map<String, Map<Integer, List<String>>> faculties) {
         this.name = name;
         this.faculties = faculties;
     }
@@ -16,7 +16,7 @@ public class DepartmentResource {
         return name;
     }
 
-    public Map<String, List<String>> getFaculties() {
+    public Map<String, Map<Integer, List<String>>> getFaculties() {
         return faculties;
     }
 }

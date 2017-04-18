@@ -7,6 +7,7 @@ import com.out.io2.timetable.service.TimetableEntryService;
 import com.out.io2.timetable.service.group.DepartmentService;
 import com.out.io2.timetable.service.model.Department;
 import com.out.io2.timetable.service.model.Faculty;
+import com.out.io2.timetable.service.model.FacultySemester;
 import com.out.io2.timetable.service.model.TimetableEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class TimetableController {
 
     /**
      * Processes data given from request. Adds timetable entry to database
+     *
      * @param timetableRequest converted csv request
      * @return processing status
      */
@@ -49,7 +51,7 @@ public class TimetableController {
                                      @PathVariable String department, @PathVariable String faculty,
                                      @PathVariable int semester, @PathVariable String group) {
         timetableRequest.getTimetableCsvRequests()
-                .forEach(request -> timetableEntryService.save(map(request, department,faculty, semester, group)));
+                .forEach(request -> timetableEntryService.save(map(request, department, faculty, semester, group)));
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -66,12 +68,15 @@ public class TimetableController {
         return ResponseEntity.ok(departmentService.getDepartmentNames());
     }
 
-    @GetMapping(value = "/departments/{department}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/departments/{departmentName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<DepartmentResource> getDepartmentDetails(@PathVariable String departmentName) {
         Department department = departmentService.getDepartmentDetails(departmentName);
-        Map<String, List<String>> groupsByFaculties = department.getFaculties().stream()
-                .collect(Collectors.toMap(Faculty::getName, Faculty::getGroupIds));
-        DepartmentResource departmentResource = new DepartmentResource(department.getName(), groupsByFaculties);
+
+        Map<String, Map<Integer, List<String>>> groupBySemesterByFaculty = department.getFaculties().stream()
+                .collect(Collectors.toMap(Faculty::getName, e -> e.getSemesters().stream()
+                        .collect(Collectors.toMap(FacultySemester::getSemester, FacultySemester::getGroups))));
+
+        DepartmentResource departmentResource = new DepartmentResource(department.getName(), groupBySemesterByFaculty);
         return ResponseEntity.ok(departmentResource);
     }
 
