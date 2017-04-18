@@ -36,13 +36,5 @@ public class ControllersConfiguration {
         return new HttpMessageConverters(messageConverter);
     }
 
-    @Bean
-    public Filter loggingFilter() {
-        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
-        filter.setIncludePayload(true);
-        filter.setIncludeQueryString(true);
-        return filter;
-    }
-
 
 }
