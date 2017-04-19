@@ -76,7 +76,7 @@ public class TimetableController {
                 .collect(Collectors.toMap(Faculty::getName, e -> e.getSemesters().stream()
                         .collect(Collectors.toMap(FacultySemester::getSemester, FacultySemester::getGroups))));
 
-        DepartmentResource departmentResource = new DepartmentResource(department.getName(), groupBySemesterByFaculty);
+        DepartmentResource departmentResource = new DepartmentResource(groupBySemesterByFaculty);
         return ResponseEntity.ok(departmentResource);
     }
 
