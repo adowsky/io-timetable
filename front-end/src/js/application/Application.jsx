@@ -5,6 +5,8 @@ import RestClient from "./RestClient";
 import ApplicationView from "./ApplicationView";
 import MainMenu from "./menu/MainMenu";
 import TimetableImporter from "./import/TimetableImporter";
+import TimetableChooser from "./display/TimetableChooser";
+import TimetableDisplay from "./display/TimetableDisplay";
 import NotFoundView from './error/NotFoundView';
 
 export default class Application extends React.Component {
@@ -34,7 +36,6 @@ export default class Application extends React.Component {
 
     }
 
-
     render() {
         return (
             <ApplicationView>
@@ -43,6 +44,8 @@ export default class Application extends React.Component {
                         <Switch>
                             <Route exact path='/' component={MainMenu}/>
                             <Route path='/import-timetable' component={TimetableImporter}/>
+                            <Route path='/choose-timetable' component={TimetableChooser}/>
+                            <Route path='/timetable/:department/:faculty/:semester/:group' component={TimetableDisplay}/>
                             <Route path="/*" component={NotFoundView}/>
                         </Switch>
                     </div>

@@ -3,11 +3,11 @@ package com.out.io2.timetable.controllers;
 import com.out.io2.timetable.api.DepartmentResource;
 import com.out.io2.timetable.api.TimetableCsvRequest;
 import com.out.io2.timetable.api.TimetableRequest;
-import com.out.io2.timetable.exceptions.NoSuchIdentifierException;
 import com.out.io2.timetable.service.TimetableEntryService;
 import com.out.io2.timetable.service.group.DepartmentService;
 import com.out.io2.timetable.service.model.Department;
 import com.out.io2.timetable.service.model.Faculty;
+import com.out.io2.timetable.service.model.RowEntry;
 import com.out.io2.timetable.service.model.TimetableEntry;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,7 +67,7 @@ public class TimetableControllerTest {
     public void shouldReturnDepartmentDetailsWithSingleFaculty() {
         //given
         String givenDepartmentName = "department";
-        when(departmentService.getDepartmentDetails(givenDepartmentName)).thenReturn(createDepartment(givenDepartmentName ,1));
+        when(departmentService.getDepartmentDetails(givenDepartmentName)).thenReturn(createDepartment(givenDepartmentName, 1));
 
         //when
         ResponseEntity<DepartmentResource> departmentDetails = controller.getDepartmentDetails(givenDepartmentName);
@@ -84,7 +82,7 @@ public class TimetableControllerTest {
     public void shouldReturnDepartmentDetailsWithoutFaculties() {
         //given
         String givenDepartmentName = "department";
-        when(departmentService.getDepartmentDetails(givenDepartmentName)).thenReturn(createDepartment(givenDepartmentName ,0));
+        when(departmentService.getDepartmentDetails(givenDepartmentName)).thenReturn(createDepartment(givenDepartmentName, 0));
 
         //when
         ResponseEntity<DepartmentResource> departmentDetails = controller.getDepartmentDetails(givenDepartmentName);
@@ -111,7 +109,26 @@ public class TimetableControllerTest {
         assertThat(actual.getBody()).isNull();
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         verify(timetableEntryService).save(captor.capture());
-        assertThat(captor.getValue()).isEqualToComparingFieldByField(expectedTimetableEntry(department, faculty,semester,group));
+        assertThat(captor.getValue()).isEqualToComparingFieldByField(expectedTimetableEntry(department, faculty, semester, group));
+    }
+
+    @Test
+    public void shouldReturnTimetable() {
+        //given
+        String department = "department";
+        String faculty = "faculty";
+        int semester = 3;
+        String group = "group";
+        RowEntry rowEntry = new RowEntry("day", "week", "sir teacher", "sub", "h", "clss", "type");
+        List<RowEntry> expectedReturn = Collections.singletonList(rowEntry);
+        when(timetableEntryService.find(department, faculty, semester, group)).thenReturn(expectedReturn);
+
+        //when
+        ResponseEntity<List<RowEntry>> actual = controller.getTimetable(department, faculty, semester, group);
+
+        //then
+        assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(actual.getBody()).containsOnly(rowEntry);
     }
 
     private TimetableRequest givenTimetableRequest() {

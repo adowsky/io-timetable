@@ -10,9 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Handles exception for web layer of application.
+ * Aspect Advice
+ */
+
 @ControllerAdvice
 @CrossOrigin
 public class ErrorHandler {
+
+    /**
+     * Catches exception and maps it on readable Error Messages
+     * @param ex Validation exception
+     * @return readable error messages
+     */
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
