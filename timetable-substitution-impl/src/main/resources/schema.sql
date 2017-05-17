@@ -86,12 +86,17 @@ ALTER TABLE plan_row
   ADD CONSTRAINT plan_row_pk PRIMARY KEY (plan_row_id);
 
 CREATE TABLE row_in_plan (
-  plan_row_plan_row_id NUMBER             NOT NULL,
+  id                   NUMBER AUTO_INCREMENT NOT NULL,
+  plan_row_plan_row_id NUMBER NOT NULL,
   plan_plan_id         NUMBER NOT NULL
 );
 
 ALTER TABLE row_in_plan
-  ADD CONSTRAINT relation_3_pk PRIMARY KEY (plan_row_plan_row_id, plan_plan_id);
+  ADD CONSTRAINT relation_3_pk PRIMARY KEY (id);
+
+CREATE UNIQUE INDEX row_in_plan__idx
+  ON
+    row_in_plan (plan_row_plan_row_id, plan_plan_id);
 
 CREATE TABLE teacher (
   first_name VARCHAR2(30 CHAR)  NOT NULL,

@@ -5,10 +5,7 @@ import com.out.io2.timetable.api.TimetableCsvRequest;
 import com.out.io2.timetable.api.TimetableRequest;
 import com.out.io2.timetable.service.TimetableEntryService;
 import com.out.io2.timetable.service.group.DepartmentService;
-import com.out.io2.timetable.service.model.Department;
-import com.out.io2.timetable.service.model.Faculty;
-import com.out.io2.timetable.service.model.FacultySemester;
-import com.out.io2.timetable.service.model.TimetableEntry;
+import com.out.io2.timetable.service.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -63,11 +60,21 @@ public class TimetableController {
 
     }
 
+    /**
+     * Returns List with departments
+     * @return List with departments
+     */
     @GetMapping(value = "/departments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<List<String>> getDepartments() {
         return ResponseEntity.ok(departmentService.getDepartmentNames());
     }
 
+
+    /**
+     * Returns details of department with given name
+     * @param departmentName department name
+     * @return details of department with given name
+     */
     @GetMapping(value = "/departments/{departmentName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<DepartmentResource> getDepartmentDetails(@PathVariable String departmentName) {
         Department department = departmentService.getDepartmentDetails(departmentName);
@@ -78,6 +85,22 @@ public class TimetableController {
 
         DepartmentResource departmentResource = new DepartmentResource(groupBySemesterByFaculty);
         return ResponseEntity.ok(departmentResource);
+    }
+
+    /**
+     * Returns timetable for given parameters
+     * @param department department name
+     * @param faculty faculty name
+     * @param semester semester
+     * @param group group name
+     * @return timetable for given parameters
+     */
+
+    @GetMapping(value = "/departments/{department}/{faculty}/{semester}/{group}/timetable", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseEntity<List<RowEntry>> getTimetable(@PathVariable String department, @PathVariable String faculty, @PathVariable int semester,
+                                         @PathVariable String group) {
+        List<RowEntry> rowEntries = timetableEntryService.find(department, faculty, semester, group);
+        return ResponseEntity.ok(rowEntries);
     }
 
 }

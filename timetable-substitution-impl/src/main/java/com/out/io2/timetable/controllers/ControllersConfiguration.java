@@ -12,19 +12,26 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 
 import java.util.Collections;
 
+
+/**
+ * Bean configuration for Spring application
+ */
 @Configuration
 public class ControllersConfiguration {
 
+    /**
+     * Returns Csv Mapper
+     * @return csv mapper
+     */
     @Bean
     public CsvMapper csvMapper() {
         return new CsvMapper();
     }
 
-    @Bean
-    public DozerBeanMapper dozerBeanMapper() {
-        return new DozerBeanMapper();
-    }
-
+    /**
+     * Return additional http message converter which handles csv media type
+     * @return http message converter supporting text/csv media type
+     */
     @Bean
     public HttpMessageConverters customConverters() {
         AbstractHttpMessageConverter<?> messageConverter = new TimetableCsvMessageConverter(new TimetableRequestParser());
