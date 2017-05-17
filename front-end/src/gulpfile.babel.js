@@ -34,6 +34,7 @@ const PATHS = {
     htmlInput: `${SOURCE_PATH}*.html`,
     imagesInput: `${SOURCE_PATH}/images/`,
     imagesOutput: `${basePath}/images/`,
+    serverOutput: `${basePath}/`
 
 };
 const options = {
@@ -89,7 +90,7 @@ gulp.task('build:images', () => {
         .pipe(gulp.dest(PATHS.imagesOutput));
 });
 
-gulp.task("watch", function () {
+gulp.task("watch", () => {
     const proxy = proxyMiddleware("/api", {target: "http://localhost:8080/"});
     syncInstance.init({
         server: {
