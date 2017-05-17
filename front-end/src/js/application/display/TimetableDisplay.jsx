@@ -28,13 +28,9 @@ export default class TimetableDisplay extends React.Component {
     }
 
     componentDidMount() {
-        const insertEmpties = (day) => {
-            if (!day || day.length === 0) {
-                return;
-            }
+        const insertEmpties = (day, dayName) => {
             let idx = 1;
-            const dayName = day[0].day;
-            const lastHour = day[day.length - 1].hour;
+            const lastHour = (day && day.length > 0) ? day[day.length - 1].hour : 1 ;
             while (idx.toString() !== lastHour.toString()) {
                 if (day[idx - 1].hour !== idx.toString()) {
                     day.splice(idx - 1, 0, {
@@ -43,6 +39,18 @@ export default class TimetableDisplay extends React.Component {
                         day: dayName
                     });
                 }
+                idx++;
+            }
+            if(day && day.length > 0) {
+                idx++;
+            }
+            
+            while (idx < 9) {
+                day.splice(idx - 1, 0, {
+                    hour: idx.toString(),
+                    type: "artificial",
+                    day: dayName
+                });
                 idx++;
             }
         };
@@ -55,11 +63,11 @@ export default class TimetableDisplay extends React.Component {
                 const thursday = timetable.filter(t => t.day === "CZWARTEK");
                 const friday = timetable.filter(t => t.day === "PIĄTEK");
 
-                insertEmpties(monday);
-                insertEmpties(tuesday);
-                insertEmpties(wednesday);
-                insertEmpties(thursday);
-                insertEmpties(friday);
+                insertEmpties(monday, "PONIEDZIAŁEK");
+                insertEmpties(tuesday, "WTOREK");
+                insertEmpties(wednesday, "ŚRODA");
+                insertEmpties(thursday, "CZWARTEK");
+                insertEmpties(friday, "PIĄTEK");
                 timetable = monday.concat(tuesday).concat(wednesday).concat(thursday).concat(friday);
                 this.setState({ timetable });
             });
@@ -73,7 +81,9 @@ export default class TimetableDisplay extends React.Component {
         const friday = this.state.timetable.filter(t => t.day === "PIĄTEK");
         return (
             <div className="timetable">
-                <div><div/>{hours.map(hour => <div key={hour}>{hour}</div>)}</div>
+                <div>
+                    <div className="grid"/>
+                    {hours.map(hour => <div key={hour} className="grid">{hour}</div>)}</div>
                 <DayView day={ monday } dayId="PONIEDZIAŁEK"/>
                 <DayView day={ tuesday } dayId="WTOREK"/>
                 <DayView day={ wednesday } dayId="ŚRODA"/>

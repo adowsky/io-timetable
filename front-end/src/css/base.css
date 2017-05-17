@@ -184,10 +184,11 @@ select {
 
 .timetable > div > div {
     display:inline-block;
-    margin: 1px;
     padding: 5px;
     width: 9%;
     text-align:center;
+    vertical-align:top;
+    min-height:65px;
 }
 .timetable > div > .heading {
     text-align:left;
@@ -205,6 +206,10 @@ select {
     display:inline-block;
     padding: 10px;
     margin: 1px;
+}
+.grid {
+    border: #666 solid 1px;
+    height:100%;
 }
 
 
