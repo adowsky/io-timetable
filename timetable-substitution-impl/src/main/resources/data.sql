@@ -1,2 +1,2 @@
-insert into timetable.teacher(first_name, last_name, degree) values('jan','weglarz','profesor');
+insert into timetable.teacher(first_name, last_name, degree) values('John','Doe','profesor');
 insert into timetable.students_group(department, faculty, year, group_number) values('INFORMATYKI', 'INFORMATYKI', 3, 'I5')

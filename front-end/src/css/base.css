@@ -175,3 +175,50 @@ select {
     padding: 2px;
     margin-left:10px;
 }
+
+.timetable {
+    width: 100%;
+    text-align:left;
+    vertical-align:text-bottom;
+}
+
+.timetable > div > div {
+    display:inline-block;
+    margin: 1px;
+    padding: 5px;
+    width: 9%;
+    text-align:center;
+}
+.timetable > div > .heading {
+    text-align:left;
+}
+.timetable > .legend > div {
+    display:block;
+    width:auto;
+    text-align:left;
+}
+.legend {
+    margin-top: 20px;
+}
+
+.explanation {
+    display:inline-block;
+    padding: 10px;
+    margin: 1px;
+}
+
+
+
+.PARZYSTY {
+    background-color:#be917c;
+}
+.NIEPARZYSTY {
+    background-color:#b2be89;
+}
+
+.WYKŁAD {
+    text-decoration:underline;
+}
+.LABORATORIA {
+    font-style:italic;
+}

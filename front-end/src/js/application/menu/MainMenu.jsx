@@ -11,6 +11,10 @@ const getMenuEntries = () => {
         {
             url: "/edit-timetable",
             title: "Edytuj istniejący plan"
+        },
+        {
+            url: "/choose-timetable",
+            title: "Wybierz plan do wyświetlenia"
         }
     ]
 };
