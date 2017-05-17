@@ -73,4 +73,6 @@ public class TimetableEntry {
     public int getYear() {
         return year;
     }
+
+
 }

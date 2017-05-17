@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@JsonPropertyOrder({"day", "week", "subject", "hour", "classroom", "type", "teacherId", "faculty", "degreeCourse", "group"})
+@JsonPropertyOrder({"day", "week", "subject", "hour", "classroom", "type", "teacherId"})
 public class TimetableCsvRequest {
     @DefinedValues(valueSet = {"PONIEDZIAŁEK", "WTOREK", "ŚRODA", "CZWARTEK", "PIĄTEK", "SOBOTA", "NIEDZIELA"})
     private String day;
@@ -24,7 +24,7 @@ public class TimetableCsvRequest {
     @Pattern(regexp = "\\d+")
     private String teacherId;
 
-    public TimetableCsvRequest(String day, String week, String subject, String hour, String classroom, String type, String teacherId, String faculty, String degreeCourse, String group) {
+    public TimetableCsvRequest(String day, String week, String subject, String hour, String classroom, String type, String teacherId) {
         this.day = day;
         this.week = week;
         this.subject = subject;
@@ -91,7 +91,6 @@ public class TimetableCsvRequest {
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
-
     @Override
     public String toString() {
         return "TimetableCsvRequest{" +

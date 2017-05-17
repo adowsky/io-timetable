@@ -13,7 +13,11 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import java.io.IOException;
 
 public class TimetableCsvMessageConverter extends AbstractHttpMessageConverter<TimetableRequest> {
-    private TimetableRequestParser timetableRequestParser = new TimetableRequestParser();
+    private TimetableRequestParser timetableRequestParser;
+
+    public TimetableCsvMessageConverter(TimetableRequestParser timetableRequestParser) {
+        this.timetableRequestParser = timetableRequestParser;
+    }
 
     @Override
     protected boolean supports(Class aClass) {

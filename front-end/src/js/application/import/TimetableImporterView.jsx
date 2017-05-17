@@ -34,6 +34,7 @@ export default class TimetableImporterView extends React.Component {
             || this.props.status === "SENDING";
         const faculties = this.props.faculties || [];
         console.log(this.props.form.department);
+        
         return (
             <div>
                 <form onSubmit={this.props.send}>
