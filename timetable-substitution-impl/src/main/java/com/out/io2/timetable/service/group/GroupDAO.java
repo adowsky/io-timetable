@@ -65,4 +65,28 @@ public class GroupDAO {
     public void setGroupNumber(String groupNumber) {
         this.groupNumber = groupNumber;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GroupDAO groupDAO = (GroupDAO) o;
+
+        if (year != groupDAO.year) return false;
+        if (id != null ? !id.equals(groupDAO.id) : groupDAO.id != null) return false;
+        if (department != null ? !department.equals(groupDAO.department) : groupDAO.department != null) return false;
+        if (faculty != null ? !faculty.equals(groupDAO.faculty) : groupDAO.faculty != null) return false;
+        return groupNumber != null ? groupNumber.equals(groupDAO.groupNumber) : groupDAO.groupNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
+        result = 31 * result + year;
+        result = 31 * result + (groupNumber != null ? groupNumber.hashCode() : 0);
+        return result;
+    }
 }
